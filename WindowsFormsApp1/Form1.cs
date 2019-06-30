@@ -18,8 +18,14 @@ namespace WindowsFormsApp1
     {
         public int count = 0;
 
-        string admin_id = "";
-        string Bot_id = "";
+        //1.make a bot by botFather on telegram
+        //2. find you chat id and your bot chat id by this boy : @ShowChatIdBot
+        //3.it's hard to under =stand code at beginig but you can az i can GODLUCK
+        //...
+
+        string admin_id = "";//telegram id
+        string Bot_id = "";//bot id
+
 
         public Form1()
         {
@@ -29,8 +35,8 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Telegram.bot.token = "";
-            
+            Telegram.bot.token = "";//bot token
+
             ThreadStart threadStart = new ThreadStart(telemager);
             Thread trd = new Thread(threadStart);
             trd.Start();
@@ -64,10 +70,11 @@ namespace WindowsFormsApp1
 
         private void telemager()
         {
-            
+            //main bot code  
+
             count++;
             txt_fresh.Text = count.ToString();
-            //Console.WriteLine(count);
+            
             
             bot.update = "true";
 
@@ -76,14 +83,12 @@ namespace WindowsFormsApp1
                 if (bot.message_id != "" & bot.chat_id != admin_id & bot.chat_id != Bot_id & bot.message_text != "/start")
                 {
 
-                    // bot.forwardMessage.send(admin_id, bot.chat_id, bot.message_id);
+            
                     
                     bot.forwardMessage.send(admin_id, bot.chat_id, bot.message_id);
                     bot.sendMessage.reply_to_message(bot.chat_id, "📤 .پیام شما با موفقیت ارسال شد " + "\n" + "🕧 .لطفا منتظر پاسخ بمانید", bot.message_id);  // پیام فرستاده شده به کاربر برای تایید ارسال پیام به ادمین
                                                                                                                                                               //if (bot.message_text == "📜 دریافت اطلاعات کاربری")
                     bot.sendMessage.send(admin_id, "FirstName is : ➤ " + bot.from_first_name + "\n" + "\n" + "LastNameis : ➤ " + bot.from_last_name + "\n" + "\n" + "Usernameis : ➤ @" + bot.from_username + "\n" + "\n" + "UserId is : ➤ " + bot.chat_id);
-                    /////
-                    ///
                    
 
                 }
@@ -93,7 +98,7 @@ namespace WindowsFormsApp1
                     {
                         Telegram.bot.Automatic_answer.textMessage("/whoami", "شما " + bot.from_last_name + " " + "هستید." + "\n" + "مدیر مجموعه." + "👩‍💼👨‍💼");
                         string reply_to_message_id = bot.update.Split(new string[] { @"""forward_from"":{""id"":" }, StringSplitOptions.None)[1].Split(',')[0];
-                        //string reply_to_message_id = "hu";
+            
 
                         bot.sendMessage.send(reply_to_message_id, "پاسخ پیام ارسالی [📮]: " + bot.message_text);
 
@@ -107,7 +112,7 @@ namespace WindowsFormsApp1
                 }
                 if (bot.message_text == "/start" & bot.chat_id != admin_id)
                 {
-                    //   using (TextWriter st = new StreamWriter("MembersRobot.txt"))
+            
                     using (StreamWriter st = File.AppendText("MembersRobot.txt"))
                     {
                         st.WriteLine(bot.chat_id + "\n");
